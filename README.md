@@ -1,1 +1,1 @@
-# Site-de-redirecionamento
+# Um site de atalhos
