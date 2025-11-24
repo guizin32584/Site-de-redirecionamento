@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>Redirecionando...</title>
+
+  <style>
+    body {
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto;
+      background-color: #000;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      overflow: hidden;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(270deg, #0b1020, #151923, #0f1724, #071026);
+      background-size: 800% 800%;
+      animation: gradientBG 12s ease infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      width: 380px;
+      padding: 22px;
+      border-radius: 10px;
+      background-color: #ffffff0f;
+      border: 1px solid #ffffff13;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.171);
+      text-align: center;
+      animation: fadeIn 0.6s ease-in-out forwards;
+      opacity: 0;
+      transform: scale(0.96);
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    p {
+      opacity: 0.8;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    .loading-bar {
+      width: 100%;
+      height: 5px;
+      background-color: #ffffff3a;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 16px;
+      position: relative;
+    }
+
+    .loading-bar::before {
+      content: "";
+      position: absolute;
+      width: 40%;
+      height: 100%;
+      background-color: #ffffff;
+      border-radius: 4px;
+      animation: loading 2.5s infinite;
+    }
+
+    @keyframes loading {
+      0% { left: -40%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bg"></div>
+
+  <div class="container">
+    <h2 id="title">Redirecionando...</h2>
+    <p id="info">Aguarde enquanto abrimos o link.</p>
+    <div class="loading-bar"></div>
+  </div>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const url = params.get('url');
+      const info = document.getElementById('info');
+      const title = document.getElementById('title');
+
+      function isValidUrl(u) {
+        try { new URL(u); return true; }
+        catch (e) { return false; }
+      }
+
+      if (url && isValidUrl(url)) {
+
+        info.textContent = "Abrindo em nova aba...";
+
+        const hiddenLink = document.createElement('a');
+        hiddenLink.href = url;
+        hiddenLink.target = "_blank";
+        hiddenLink.style.display = "none";
+        document.body.appendChild(hiddenLink);
+
+        setTimeout(() => {
+          hiddenLink.click();
+        }, 500);
+
+      } else {
+        title.textContent = "URL inválida";
+        info.textContent = "Não encontramos uma URL válida para abrir.";
+      }
+
+    })();
+  </script>
+
+</body>
+
+</html>
