@@ -112,38 +112,40 @@
     <div class="loading-bar"></div>
   </div>
 
-  <script>
-    (function () {
-      const params = new URLSearchParams(window.location.search);
-      const url = params.get('url');
-      const info = document.getElementById('info');
-      const title = document.getElementById('title');
+ <script>
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    const url = params.get('url');
+    const info = document.getElementById('info');
+    const title = document.getElementById('title');
 
-      function isValidUrl(u) {
-        try { new URL(u); return true; }
-        catch (e) { return false; }
-      }
+    function isValidUrl(u) {
+      try { new URL(u); return true; }
+      catch (e) { return false; }
+    }
 
-      if (url && isValidUrl(url)) {
+    if (url && isValidUrl(url)) {
 
-        info.textContent = "Abrindo em nova aba...";
+      info.textContent = "Abrindo em nova aba...";
 
-        const hiddenLink = document.createElement('a');
-        hiddenLink.href = url;
-        hiddenLink.target = "_blank";
-        hiddenLink.style.display = "none";
-        document.body.appendChild(hiddenLink);
+      const btn = document.createElement("button");
+      btn.style.display = "none";
+      document.body.appendChild(btn);
 
-        setTimeout(() => {
-          hiddenLink.click();
-        }, 500);
+      btn.addEventListener("click", () => {
+        window.open(url, "_blank");
+      });
 
-      } else {
-        title.textContent = "URL inválida";
-        info.textContent = "Não encontramos uma URL válida para abrir.";
-      }
+      btn.click(); // executa INSTANTANEAMENTE – não toma block
 
-    })();
+    } else {
+      title.textContent = "URL inválida";
+      info.textContent = "Não encontramos uma URL válida para abrir.";
+    }
+
+  })();
+</script>
+
   </script>
 
 </body>
