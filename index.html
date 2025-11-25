@@ -32,9 +32,10 @@
       position: fixed;
       inset: 0;
       z-index: -2;
-      background: linear-gradient(120deg, #000000, #1a0233, #2d015a);
-      background-size: 200% 200%;
-      animation: pulseGradient 10s ease infinite;
+      /* Ajuste para cores mais profundas e gradiente mais amplo */
+      background: linear-gradient(135deg, #000000, #0a011a, #1f0141, #3a0077);
+      background-size: 300% 300%;
+      animation: pulseGradient 15s ease infinite;
     }
 
     @keyframes pulseGradient {
@@ -70,7 +71,7 @@
       width: 200px;
       height: 200px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(150, 0, 255, 0.45), transparent 70%);
+      background: radial-gradient(circle, rgba(180, 50, 255, 0.55), transparent 70%); 
       pointer-events: none;
       transform: translate(-50%, -50%);
       z-index: -1;
@@ -102,6 +103,20 @@
       padding: 10px 18px;
       border-radius: 12px;
       backdrop-filter: blur(10px);
+    }
+    
+    #time-emoji {
+        font-size: 32px;
+        margin-top: -10px;
+        margin-bottom: 8px;
+        animation: pulse 2s infinite;
+        display: block;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
     }
 
     header img.logo {
@@ -195,6 +210,7 @@
   <div class="container">
     <header>
       <div id="clock">00:00:00</div>
+      <span id="time-emoji"></span> 
       <img class="logo" src="Imagens/logo-escola.png" alt="Logo" onerror="this.style.display='none'">
       <h1 id="greeting">Carregando...</h1>
     </header>
@@ -203,7 +219,7 @@
 
     <nav class="links organized" aria-label="Links da escola">
       <div class="row">
-        <a class="card" href="https://www.tiktok.com" target="_blank"> 
+        <a class="card" href="https://www.tiktok.com" target="_blank">
           <img src="https://www.google.com/s2/favicons?sz=64&domain=tiktok.com">
           <span>Tiktok</span>
         </a>
@@ -235,7 +251,26 @@
   </div>
 
   <script>
-    // Configuração e animação dos pontos flutuantes (mantido)
+    // As frases foram ajustadas para serem curtas, mantendo a saudação e a pergunta.
+    const GREETINGS = {
+        morning: { 
+            text: "Bom dia, Guilherme! O que você vai usar hoje?", 
+            emoji: "☀️☕" 
+        }, 
+        afternoon: { 
+            text: "Boa tarde, Guilherme! O que você vai usar hoje?", 
+            emoji: "😎🔥" 
+        }, 
+        evening: { 
+            text: "Boa noite, Guilherme! O que você vai usar hoje?", 
+            emoji: "🌙⭐" 
+        },
+        night: {
+            text: "Madrugada, Guilherme! O que você vai usar hoje?",
+            emoji: "🦉💻"
+        }
+    };
+
     const dots = document.getElementById("dots");
     for (let i = 0; i < 40; i++) {
       const d = document.createElement("div");
@@ -246,7 +281,6 @@
       dots.appendChild(d);
     }
 
-    // Efeito de brilho do cursor (mantido)
     const glow = document.getElementById("cursorGlow");
 
     document.addEventListener("mousemove", (e) => {
@@ -259,23 +293,44 @@
       glow.style.opacity = 0;
     });
 
-    // Lógica da saudação baseada na hora (mantido)
-    const h = new Date().getHours();
     const greet = document.getElementById("greeting");
+    const timeEmoji = document.getElementById("time-emoji");
 
-    // Assumindo que o nome do usuário é 'Guilherme', como no código original.
-    if (h < 12) greet.textContent = "Bom dia, Guilherme! O que você vai usar hoje?";
-    else if (h < 18) greet.textContent = "Boa tarde, Guilherme! O que você vai usar hoje?";
-    else greet.textContent = "Boa noite, Guilherme! O que você vai usar hoje?";
+    function updateGreetingAndEmoji() {
+        const h = new Date().getHours();
+        let currentPart;
 
-    // Relógio em tempo real (mantido)
+        if (h >= 5 && h < 12) { 
+            // 5:00h até 11:59h: Manhã
+            currentPart = GREETINGS.morning;
+        } else if (h >= 12 && h < 18) { 
+            // 12:00h até 17:59h: Tarde
+            currentPart = GREETINGS.afternoon;
+        } else if (h >= 18 && h <= 23) {
+            // 18:00h até 23:59h: Noite
+            currentPart = GREETINGS.evening;
+        } else {
+            // 00:00h até 4:59h: Madrugada
+            currentPart = GREETINGS.night;
+        }
+
+        greet.textContent = currentPart.text;
+        timeEmoji.textContent = currentPart.emoji;
+    }
+
     function updateClock() {
       const now = new Date();
       const hh = String(now.getHours()).padStart(2, '0');
       const mm = String(now.getMinutes()).padStart(2, '0');
       const ss = String(now.getSeconds()).padStart(2, '0');
       document.getElementById("clock").textContent = `${hh}:${mm}:${ss}`;
+
+      if (ss === '00' || ss === '30') { 
+        updateGreetingAndEmoji();
+      }
     }
+
+    updateGreetingAndEmoji();
 
     setInterval(updateClock, 1000);
     updateClock();
