@@ -28,6 +28,62 @@
       position: relative;
     }
 
+    /* === INTRO ANIMATION === */
+    .intro-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #000000, #0a011a, #1f0141, #3a0077);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeOut 0.8s ease 2.5s forwards;
+    }
+
+    .intro-text {
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: introReveal 1.5s ease 0.3s forwards;
+      text-shadow: 0 0 30px rgba(180, 50, 255, 0.8),
+                   0 0 60px rgba(180, 50, 255, 0.5);
+    }
+
+    @keyframes introReveal {
+      0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.05) translateY(0);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    .main-content {
+      opacity: 0;
+      animation: contentFadeIn 0.8s ease 3s forwards;
+      width: 100%;
+    }
+
+    @keyframes contentFadeIn {
+      to { opacity: 1; }
+    }
+
+    /* === BACKGROUND === */
     .bg-gradient {
       position: fixed;
       inset: 0;
@@ -192,59 +248,73 @@
       background: var(--card-hover);
       box-shadow: 0 10px 30px rgba(2,6,23,0.6), inset 0 0 18px rgba(200,220,255,0.45);
     }
+
+    @media (max-width: 600px) {
+      .intro-text {
+        font-size: 36px;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div class="bg-gradient"></div>
-  <div class="floating-dots" id="dots"></div>
-  <div class="cursor-glow" id="cursorGlow"></div>
+  <!-- Intro Screen -->
+  <div class="intro-screen">
+    <div class="intro-text">Olá, Guilherme! 👋</div>
+  </div>
 
-  <div class="container">
-    <header>
-      <div id="clock">00:00:00</div>
-      <span id="time-emoji"></span> 
-      <img class="logo" src="Imagens/logo-escola.png" alt="Logo" onerror="this.style.display='none'">
-      <h1 id="greeting">Carregando...</h1>
-    </header>
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="bg-gradient"></div>
+    <div class="floating-dots" id="dots"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
 
-    <p class="lead">Escolha um atalho abaixo:</p>
+    <div class="container">
+      <header>
+        <div id="clock">00:00:00</div>
+        <span id="time-emoji"></span> 
+        <img class="logo" src="Imagens/logo-escola.png" alt="Logo" onerror="this.style.display='none'">
+        <h1 id="greeting">Carregando...</h1>
+      </header>
 
-    <nav class="links organized" aria-label="Atalhos rápidos">
-      <div class="row">
-        <a class="card" href="https://www.tiktok.com" target="_blank">
-          <img src="https://www.google.com/s2/favicons?sz=64&domain=tiktok.com">
-          <span>Tiktok</span>
-        </a>
-        <a class="card" href="https://mail.google.com" target="_blank">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png">
-          <span>Gmail</span>
-        </a>
-        <a class="card" href="https://www.instagram.com" target="_blank">
-          <img src="https://www.google.com/s2/favicons?sz=64&domain=instagram.com">
-          <span>Instagram</span>
-        </a>
-      </div>
+      <p class="lead">Escolha um atalho abaixo:</p>
 
-      <div class="row">
-        <a class="card" href="https://www.youtube.com" target="_blank">
-          <img src="https://www.google.com/s2/favicons?sz=64&domain=youtube.com">
-          <span>YouTube</span>
-        </a>
-        <a class="card" href="https://www.twitch.tv" target="_blank">
-          <img src="https://www.google.com/s2/favicons?sz=64&domain=twitch.tv">
-          <span>Twitch</span>
-        </a>
-        <a class="card" href="https://chat.openai.com" target="_blank">
-          <img src="https://www.google.com/s2/favicons?sz=64&domain=chat.openai.com">
-          <span>ChatGPT</span>
-        </a>
-      </div>
-    </nav>
+      <nav class="links organized" aria-label="Atalhos rápidos">
+        <div class="row">
+          <a class="card" href="https://www.tiktok.com" target="_blank">
+            <img src="https://www.google.com/s2/favicons?sz=64&domain=tiktok.com">
+            <span>Tiktok</span>
+          </a>
+          <a class="card" href="https://mail.google.com" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png">
+            <span>Gmail</span>
+          </a>
+          <a class="card" href="https://www.instagram.com" target="_blank">
+            <img src="https://www.google.com/s2/favicons?sz=64&domain=instagram.com">
+            <span>Instagram</span>
+          </a>
+        </div>
+
+        <div class="row">
+          <a class="card" href="https://www.youtube.com" target="_blank">
+            <img src="https://www.google.com/s2/favicons?sz=64&domain=youtube.com">
+            <span>YouTube</span>
+          </a>
+          <a class="card" href="https://www.twitch.tv" target="_blank">
+            <img src="https://www.google.com/s2/favicons?sz=64&domain=twitch.tv">
+            <span>Twitch</span>
+          </a>
+          <a class="card" href="https://chat.openai.com" target="_blank">
+            <img src="https://www.google.com/s2/favicons?sz=64&domain=chat.openai.com">
+            <span>ChatGPT</span>
+          </a>
+        </div>
+      </nav>
+    </div>
   </div>
 
   <script>
-    // As frases de saudação (sem mensagens extras)
+    // As frases de saudação
     const GREETINGS = {
         morning: { 
             text: "Bom dia, Guilherme! O que você vai usar hoje?", 
@@ -264,7 +334,7 @@
         }
     };
 
-    // --- Animação de Fundo (Dots e Cursor) ---
+    // Animação de Fundo (Dots e Cursor)
     const dots = document.getElementById("dots");
     for (let i = 0; i < 40; i++) {
       const d = document.createElement("div");
@@ -287,8 +357,7 @@
       glow.style.opacity = 0;
     });
 
-
-    // --- Lógica de Saudação e Relógio ---
+    // Lógica de Saudação e Relógio
     const greet = document.getElementById("greeting");
     const timeEmoji = document.getElementById("time-emoji");
 
@@ -325,7 +394,6 @@
     updateGreetingAndEmoji();
     setInterval(updateClock, 1000);
     updateClock();
-    
   </script>
 </body>
 </html>
