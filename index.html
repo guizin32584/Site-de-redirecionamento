@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Site de redirecionamento</title>
+  <title>Site de Atalhos</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
@@ -32,7 +32,6 @@
       position: fixed;
       inset: 0;
       z-index: -2;
-      /* Ajuste para cores mais profundas e gradiente mais amplo */
       background: linear-gradient(135deg, #000000, #0a011a, #1f0141, #3a0077);
       background-size: 300% 300%;
       animation: pulseGradient 15s ease infinite;
@@ -193,12 +192,6 @@
       background: var(--card-hover);
       box-shadow: 0 10px 30px rgba(2,6,23,0.6), inset 0 0 18px rgba(200,220,255,0.45);
     }
-
-    @media (max-width: 520px) {
-      header img.logo { width: 64px; height: 64px; }
-      .card { width: 110px; height: 110px; }
-      #clock { font-size: 20px; }
-    }
   </style>
 </head>
 
@@ -215,9 +208,9 @@
       <h1 id="greeting">Carregando...</h1>
     </header>
 
-    <p class="lead">Escolha um link abaixo:</p>
+    <p class="lead">Escolha um atalho abaixo:</p>
 
-    <nav class="links organized" aria-label="Links da escola">
+    <nav class="links organized" aria-label="Atalhos rápidos">
       <div class="row">
         <a class="card" href="https://www.tiktok.com" target="_blank">
           <img src="https://www.google.com/s2/favicons?sz=64&domain=tiktok.com">
@@ -251,7 +244,7 @@
   </div>
 
   <script>
-    // As frases foram ajustadas para serem curtas, mantendo a saudação e a pergunta.
+    // As frases de saudação (sem mensagens extras)
     const GREETINGS = {
         morning: { 
             text: "Bom dia, Guilherme! O que você vai usar hoje?", 
@@ -271,6 +264,7 @@
         }
     };
 
+    // --- Animação de Fundo (Dots e Cursor) ---
     const dots = document.getElementById("dots");
     for (let i = 0; i < 40; i++) {
       const d = document.createElement("div");
@@ -293,6 +287,8 @@
       glow.style.opacity = 0;
     });
 
+
+    // --- Lógica de Saudação e Relógio ---
     const greet = document.getElementById("greeting");
     const timeEmoji = document.getElementById("time-emoji");
 
@@ -301,16 +297,12 @@
         let currentPart;
 
         if (h >= 5 && h < 12) { 
-            // 5:00h até 11:59h: Manhã
             currentPart = GREETINGS.morning;
         } else if (h >= 12 && h < 18) { 
-            // 12:00h até 17:59h: Tarde
             currentPart = GREETINGS.afternoon;
         } else if (h >= 18 && h <= 23) {
-            // 18:00h até 23:59h: Noite
             currentPart = GREETINGS.evening;
         } else {
-            // 00:00h até 4:59h: Madrugada
             currentPart = GREETINGS.night;
         }
 
@@ -331,9 +323,9 @@
     }
 
     updateGreetingAndEmoji();
-
     setInterval(updateClock, 1000);
     updateClock();
+    
   </script>
 </body>
 </html>
